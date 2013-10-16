@@ -48,6 +48,10 @@ class APN::App < APN::Base
         APN::Connection.open_for_delivery({:cert => the_cert}) do |conn, sock|
           APN::Device.find_each(:conditions => conditions) do |dev|
             dev.unsent_notifications.each do |noty|
+              puts "----NOTIFICATION:\n"
+              puts noty.to_yaml
+              puts "-----------------\n"
+              
               conn.write(noty.message_for_sending)
               noty.sent_at = Time.now
               noty.save

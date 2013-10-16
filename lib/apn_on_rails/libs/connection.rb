@@ -47,11 +47,6 @@ module APN
                    :passphrase => configatron.apn.passphrase,
                    :host => configatron.apn.host,
                    :port => configatron.apn.port}.merge(options)
-
-        puts '-----------------\n'
-        puts options.to_yaml
-        puts '=================\n'
-        
         #cert = File.read(options[:cert])
         cert = options[:cert]
         ctx = OpenSSL::SSL::SSLContext.new
