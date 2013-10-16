@@ -53,6 +53,7 @@ class APN::App < APN::Base
               puts "-----------------\n"
 
               puts conn.write(noty.message_for_sending)
+              puts "SLEEPING 0.5"
               sleep 0.5
               puts "^^^^^^^^^^^^^^^^^\n"
               noty.sent_at = Time.now
