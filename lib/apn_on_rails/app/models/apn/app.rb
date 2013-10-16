@@ -19,12 +19,11 @@ class APN::App < APN::Base
   # so as to not be sent again.
   #
   def send_notifications
-    puts "USING LOCAL PLUGIN ATTENTION THIS IS USING THE LOCAL PLUGIN ATTENTION THIS IS USING A LOCAL VERSION OF THIS PLUGIN ATTENTION!!!!!"
-    # if self.cert.nil?
-    #   raise APN::Errors::MissingCertificateError.new
-    #   return
-    # end
-    # APN::App.send_notifications_for_cert(self.cert, self.id)
+    if self.cert.nil?
+      raise APN::Errors::MissingCertificateError.new
+      return
+    end
+    APN::App.send_notifications_for_cert(self.cert, self.id)
   end
 
   def self.send_notifications
