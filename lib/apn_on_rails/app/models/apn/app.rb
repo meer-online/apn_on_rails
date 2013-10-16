@@ -48,7 +48,7 @@ class APN::App < APN::Base
         APN::Connection.open_for_delivery({:cert => the_cert}) do |conn, sock|
           APN::Device.find_each(:conditions => conditions) do |dev|
             dev.unsent_notifications.each do |noty|
-              puts conn.write(noty.message_for_sending)
+              conn.write(noty.message_for_sending)
 
               # This seems to fix the bug where multiple notifications get 
               # missed by Apple when sending Push notifications as a worker 
