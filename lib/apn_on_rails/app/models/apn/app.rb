@@ -49,10 +49,11 @@ class APN::App < APN::Base
           APN::Device.find_each(:conditions => conditions) do |dev|
             dev.unsent_notifications.each do |noty|
               puts "----NOTIFICATION:\n"
-              puts noty.to_yaml
+              puts noty.message_for_sending.to_yaml
               puts "-----------------\n"
-              
-              conn.write(noty.message_for_sending)
+
+              puts conn.write(noty.message_for_sending)
+              puts "^^^^^^^^^^^^^^^^^\n"
               noty.sent_at = Time.now
               noty.save
             end
