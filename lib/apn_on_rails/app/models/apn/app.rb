@@ -114,10 +114,16 @@ class APN::App < APN::Base
              puts sock.inspect
              puts "============================================"
 
-             conn.write(noty.enhanced_message_for_sending)
+             puts conn.write(noty.enhanced_message_for_sending)
+             puts "--------------After write----------------"
              noty.sent_at = Time.now
              noty.save
             rescue Exception => e
+              error_code, notif_id = response_from_apns(conn)
+              puts "***********************************"
+              puts error_code.inspect
+              puts notif_id.inspect
+              puts "***********************************"
               if e.message == "Broken pipe"
                 #Write failed (disconnected). Read response.
                 error_code, notif_id = response_from_apns(conn)
