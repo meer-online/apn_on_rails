@@ -37,43 +37,118 @@ class APN::App < APN::Base
     end
   end
 
+  # def self.send_notifications_for_cert(the_cert, app_id)
+  #   # unless self.unsent_notifications.nil? || self.unsent_notifications.empty?
+  #     if (app_id == nil)
+  #       conditions = "app_id is null"
+  #     else
+  #       conditions = ["app_id = ?", app_id]
+  #     end
+  #     begin
+  #       APN::Connection.open_for_delivery({:cert => the_cert}) do |conn, sock|
+  #         APN::Device.find_each(:conditions => conditions) do |dev|
+  #           dev.unsent_notifications.each do |noty|
+  #             conn.write(noty.message_for_sending)
+  #
+  #             # This seems to fix the bug where multiple notifications get
+  #             # missed by Apple when sending Push notifications as a worker
+  #             # task through Delayed::Job
+  #             puts "----NOTIFICATION:\n"
+  #             puts noty.message_for_sending.to_yaml
+  #             puts "-----------------\n"
+  #             puts "============================================"
+  #             puts conn.inspect
+  #             puts "============================================"
+  #             sleep 3
+  #             puts "============================================"
+  #             puts sock.inspect
+  #             puts "============================================"
+  #             noty.sent_at = Time.now
+  #             noty.save
+  #           end
+  #         end
+  #       end
+  #     rescue Exception => e
+  #       log_connection_exception(e)
+  #     end
+  #   # end
+  # end
+  ######################
+  ## testing notifications
+  #######################
+  def self.response_from_apns(connection)
+    timeout = 5
+    if IO.select([connection], nil, nil, timeout)
+      buf = connection.read(6)
+      if buf
+        command, error_code, notification_id = buf.unpack('CCN')
+        [error_code, notification_id]
+      end
+    end
+  end
+
   def self.send_notifications_for_cert(the_cert, app_id)
     # unless self.unsent_notifications.nil? || self.unsent_notifications.empty?
-      if (app_id == nil)
-        conditions = "app_id is null"
-      else
-        conditions = ["app_id = ?", app_id]
-      end
-      begin
-        APN::Connection.open_for_delivery({:cert => the_cert}) do |conn, sock|
-          APN::Device.find_each(:conditions => conditions) do |dev|
-            dev.unsent_notifications.each do |noty|
-              conn.write(noty.message_for_sending)
+    if (app_id == nil)
+      conditions = "app_id is null"
+    else
+      conditions = ["app_id = ?", app_id]
+    end
+    begin
+      APN::Connection.open_for_delivery({:cert => the_cert}) do |conn, sock|
+        APN::Device.find_each(:conditions => conditions) do |dev|
+          dev.unsent_notifications.each do |noty|
+            begin
 
-              # This seems to fix the bug where multiple notifications get 
-              # missed by Apple when sending Push notifications as a worker 
-              # task through Delayed::Job
-              puts "----NOTIFICATION:\n"
-              puts noty.message_for_sending.to_yaml
-              puts "-----------------\n"
-              puts "============================================"
-              puts conn.inspect
-              puts "============================================"
-              sleep 0.0030001
-              puts "============================================"
-              puts sock.inspect
-              puts "============================================"
-              noty.sent_at = Time.now
-              noty.save
+             # This seems to fix the bug where multiple notifications get
+             # missed by Apple when sending Push notifications as a worker
+             # task through Delayed::Job
+             puts "----NOTIFICATION:\n"
+             puts noty.message_for_sending.to_yaml
+             puts "-----------------\n"
+             puts "============================================"
+             puts conn.inspect
+             puts "============================================"
+             sleep 1
+             puts "============================================"
+             puts sock.inspect
+             puts "============================================"
+
+             conn.write(noty.enhanced_message_for_sending)
+             noty.sent_at = Time.now
+             noty.save
+            rescue Exception => e
+              if e.message == "Broken pipe"
+                #Write failed (disconnected). Read response.
+                error_code, notif_id = response_from_apns(conn)
+                puts "***********************************"
+                puts error_code.inspect
+                puts notif_id.inspect
+                puts "***********************************"
+                if error_code == 8
+                  failed_notification = APN::Notification.find(notif_id)
+                  puts failed_notification
+                  # unless failed_notification.nil?
+                  #   unless failed_notification.device.nil?
+                  #     APN::Device.delete(failed_notification.device.id)
+                  #     # retry sending notifications after invalid token was deleted
+                  #     send_notifications_for_cert(the_cert, app_id)
+                  #   end
+                  # end
+                end
+              end
             end
           end
         end
-      rescue Exception => e
-        log_connection_exception(e)
       end
+    rescue Exception => e
+      log_connection_exception(e)
+    end
     # end
   end
-
+  ######################
+  ## testing notifications
+  #######################
   def send_group_notifications
     if self.cert.nil?
       raise APN::Errors::MissingCertificateError.new
