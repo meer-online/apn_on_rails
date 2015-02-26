@@ -53,8 +53,16 @@ class APN::App < APN::Base
               # This seems to fix the bug where multiple notifications get 
               # missed by Apple when sending Push notifications as a worker 
               # task through Delayed::Job
-              sleep 0.00000001
-
+              puts "----NOTIFICATION:\n"
+              puts noty.message_for_sending.to_yaml
+              puts "-----------------\n"
+              puts "============================================"
+              puts conn.inspect
+              puts "============================================"
+              sleep 0.0030001
+              puts "============================================"
+              puts sock.inspect
+              puts "============================================"
               noty.sent_at = Time.now
               noty.save
             end
