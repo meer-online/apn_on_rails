@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="76f565b1-9d9c-405f-8d78-04130daec4a5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/apn_on_rails/app/models/apn/notification.rb" afterPath="$PROJECT_DIR$/lib/apn_on_rails/app/models/apn/notification.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/apn_on_rails/app/models/apn/app.rb" afterPath="$PROJECT_DIR$/lib/apn_on_rails/app/models/apn/app.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="apn_on_rails.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,21 +28,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="app.rb" pinned="false" current-in-tab="false">
+      <file leaf-file-name="app.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/apn_on_rails/app/models/apn/app.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1748" max-vertical-offset="4554">
-              <caret line="116" column="49" selection-start-line="116" selection-start-column="49" selection-end-line="116" selection-end-column="49" />
+            <state vertical-scroll-proportion="1.0998669" vertical-offset="1694" max-vertical-offset="4392">
+              <caret line="140" column="15" selection-start-line="140" selection-start-column="15" selection-end-line="140" selection-end-column="15" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="notification.rb" pinned="false" current-in-tab="true">
+      <file leaf-file-name="notification.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/apn_on_rails/app/models/apn/notification.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5365854" vertical-offset="1224" max-vertical-offset="1962">
-              <caret line="90" column="60" selection-start-line="90" selection-start-column="60" selection-end-line="90" selection-end-column="60" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="1962">
+              <caret line="92" column="53" selection-start-line="92" selection-start-column="36" selection-end-line="92" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -57,8 +56,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/lib/apn_on_rails/app/models/apn/app.rb" />
         <option value="$PROJECT_DIR$/lib/apn_on_rails/app/models/apn/notification.rb" />
+        <option value="$PROJECT_DIR$/lib/apn_on_rails/app/models/apn/app.rb" />
       </list>
     </option>
   </component>
@@ -318,18 +317,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/apn_on_rails/app/models/apn/app.rb">
+    <entry file="file://$PROJECT_DIR$/lib/apn_on_rails/app/models/apn/notification.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1748" max-vertical-offset="4554">
-          <caret line="116" column="49" selection-start-line="116" selection-start-column="49" selection-end-line="116" selection-end-column="49" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="1962">
+          <caret line="92" column="53" selection-start-line="92" selection-start-column="36" selection-end-line="92" selection-end-column="53" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/apn_on_rails/app/models/apn/notification.rb">
+    <entry file="file://$PROJECT_DIR$/lib/apn_on_rails/app/models/apn/app.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5365854" vertical-offset="1224" max-vertical-offset="1962">
-          <caret line="90" column="60" selection-start-line="90" selection-start-column="60" selection-end-line="90" selection-end-column="60" />
+        <state vertical-scroll-proportion="1.0998669" vertical-offset="1694" max-vertical-offset="4392">
+          <caret line="140" column="15" selection-start-line="140" selection-start-column="15" selection-end-line="140" selection-end-column="15" />
           <folding />
         </state>
       </provider>

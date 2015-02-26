@@ -103,44 +103,35 @@ class APN::App < APN::Base
              # This seems to fix the bug where multiple notifications get
              # missed by Apple when sending Push notifications as a worker
              # task through Delayed::Job
-             puts "----NOTIFICATION:\n"
-             puts noty.message_for_sending.to_yaml
-             puts "-----------------\n"
              puts "============================================"
-             puts conn.inspect
+             puts "conn= #{conn.inspect} - sck=#{sock.inspect}"
              puts "============================================"
              sleep 1
-             puts "============================================"
-             puts sock.inspect
-             puts "============================================"
-
-             puts conn.write(noty.enhanced_message_for_sending)
-             puts "--------------After write----------------"
+             conn.write(noty.enhanced_message_for_sending)
              noty.sent_at = Time.now
              noty.save
+             puts "-------------Message written----------------"
             rescue Exception => e
               error_code, notif_id = response_from_apns(conn)
               puts "***********************************"
-              puts error_code.inspect
-              puts notif_id.inspect
+              puts "err_code = #{error_code.inspect} - ntf_id=#{notif_id.inspect}"
               puts "***********************************"
               if e.message == "Broken pipe"
                 #Write failed (disconnected). Read response.
-                error_code, notif_id = response_from_apns(conn)
-                puts "***********************************"
-                puts error_code.inspect
-                puts notif_id.inspect
+                #error_code, notif_id = response_from_apns(conn)
+                puts "**************Broken Pipe*********************"
+                puts "err_code = #{error_code.inspect} - ntf_id=#{notif_id.inspect}"
                 puts "***********************************"
                 if error_code == 8
                   failed_notification = APN::Notification.find(notif_id)
                   puts failed_notification
-                  # unless failed_notification.nil?
-                  #   unless failed_notification.device.nil?
-                  #     APN::Device.delete(failed_notification.device.id)
-                  #     # retry sending notifications after invalid token was deleted
-                  #     send_notifications_for_cert(the_cert, app_id)
-                  #   end
-                  # end
+                  unless failed_notification.nil?
+                    unless failed_notification.device.nil?
+                       APN::Device.delete(failed_notification.device.id)
+                       # retry sending notifications after invalid token was deleted
+                       send_notifications_for_cert(the_cert, app_id)
+                     end
+                  end
                 end
               end
             end
