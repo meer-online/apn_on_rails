@@ -108,11 +108,11 @@ class APN::App < APN::Base
              puts "============================================"
              #sleep 1
              sleep 0.001
-             puts "=============================="
-             puts "#{noty.id}"
-             puts "******************************"
-             noty.alert = noty.alert.gsub(/["'"]/,'').gsub(/[&]/, '')
-             puts "** encoding changes **"
+             # puts "=============================="
+             # puts "#{noty.id}"
+             # puts "******************************"
+             #noty.alert = noty.alert.gsub(/["'"]/,'').gsub(/[&]/, '')
+             #puts "** encoding changes **"
              conn.write(noty.enhanced_message_for_sending)
              noty.sent_at = Time.now
              noty.save
@@ -122,8 +122,8 @@ class APN::App < APN::Base
               puts "***********************************"
               puts "err_code = #{error_code.inspect} - ntf_id=#{notif_id.inspect}"
               puts "***********************************"
-              puts "===========#{dev.id}==================="
-              puts "======em=====#{e.message}==================="
+              #puts "===========#{dev.id}==================="
+              #puts "======em=====#{e.message}==================="
 
               if e.message == "Broken pipe"
                 #Write failed (disconnected). Read response.

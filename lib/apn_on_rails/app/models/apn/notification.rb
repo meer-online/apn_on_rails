@@ -51,7 +51,7 @@ class APN::Notification < APN::Base
   def apple_hash
     result = {}
     result['aps'] = {}
-    result['aps']['alert'] = self.alert if self.alert
+    result['aps']['alert'] = self.alert.gsub(/["'"]/,'').gsub(/[&]/, '') if self.alert
     result['aps']['badge'] = self.badge.to_i if self.badge
     if self.sound
       result['aps']['sound'] = self.sound if self.sound.is_a? String
