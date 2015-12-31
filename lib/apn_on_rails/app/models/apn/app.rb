@@ -111,7 +111,7 @@ class APN::App < APN::Base
              puts "=============================="
              puts "#{noty.id}"
              puts "******************************"
-             noty.alert = noty.alert.to_s.force_encoding("utf-8").gsub(/[“’”]|["&"]/,'')
+             noty.alert = noty.alert.gsub(/["’"]/,'').gsub(/[&]/, '')
              puts "** encoding changes **"
              conn.write(noty.enhanced_message_for_sending)
              noty.sent_at = Time.now
