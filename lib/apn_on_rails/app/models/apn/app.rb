@@ -106,10 +106,13 @@ class APN::App < APN::Base
              puts "============================================"
              puts "conn= #{conn.inspect} - sck=#{sock.inspect}"
              puts "============================================"
-             sleep 1
+             #sleep 1
+             sleep 0.001
              puts "=============================="
              puts "#{noty.id}"
              puts "******************************"
+             noty.alert = noty.alert.to_s.force_encoding("utf-8").gsub(/[“’”]|["&"]/,'')
+             puts "** encoding changes **"
              conn.write(noty.enhanced_message_for_sending)
              noty.sent_at = Time.now
              noty.save
