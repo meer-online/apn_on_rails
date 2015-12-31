@@ -107,6 +107,9 @@ class APN::App < APN::Base
              puts "conn= #{conn.inspect} - sck=#{sock.inspect}"
              puts "============================================"
              sleep 1
+             puts "=============================="
+             puts "#{noty.id}"
+             puts "******************************"
              conn.write(noty.enhanced_message_for_sending)
              noty.sent_at = Time.now
              noty.save
@@ -116,6 +119,9 @@ class APN::App < APN::Base
               puts "***********************************"
               puts "err_code = #{error_code.inspect} - ntf_id=#{notif_id.inspect}"
               puts "***********************************"
+              puts "===========#{dev.id}==================="
+              puts "======em=====#{e.message}==================="
+
               if e.message == "Broken pipe"
                 #Write failed (disconnected). Read response.
                 #error_code, notif_id = response_from_apns(conn)
