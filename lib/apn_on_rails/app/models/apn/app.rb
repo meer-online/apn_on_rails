@@ -121,7 +121,7 @@ class APN::App < APN::Base
               error_code, notif_id = response_from_apns(conn)
               puts "***********************************"
               puts "err_code = #{error_code.inspect} - ntf_id=#{notif_id.inspect}"
-              puts "***********************************"
+              puts "*******#{dev.id}*******#{e.message}********#{noty.id}************"
               #puts "===========#{dev.id}==================="
               #puts "======em=====#{e.message}==================="
 
